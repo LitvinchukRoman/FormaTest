@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/LitvinchukRoman/FormaTest.git
     targetRevision: HEAD
-    path: helm-charts/my-monitoring-stack
+    path: helm-charts/victoria-metrics-stack
     helm:
       valueFiles:
         - values.yaml
