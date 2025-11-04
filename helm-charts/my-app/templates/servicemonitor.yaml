@@ -1,0 +1,19 @@
+{{- if .Values.serviceMonitor.enabled -}}
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "my-app.fullname" . }}
+  labels:
+    {{- with .Values.serviceMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- include "my-app.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "my-app.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http-metrics
+      path: /metrics
+      interval: 30s      # Інтервал збору метрик
+{{- end }}

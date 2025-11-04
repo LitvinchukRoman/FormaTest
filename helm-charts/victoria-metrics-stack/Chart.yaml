@@ -1,0 +1,15 @@
+apiVersion: v2
+name: my-monitoring-stack
+description: Повний стек моніторингу VictoriaMetrics та мого додатку
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: victoria-metrics-k8s-stack
+    version: "0.45.0"
+    repository: "https://victoriametrics.github.io/helm-charts/"
+    alias: "victoria-metrics"
+
+  - name: my-app
+    version: "0.1.0"
+    repository: "file://../my-app"
