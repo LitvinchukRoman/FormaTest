@@ -3,20 +3,20 @@ kind: Application
 metadata:
   name: my-monitoring-stack
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
     repoURL: https://github.com/LitvinchukRoman/FormaTest.git
     targetRevision: HEAD
     path: helm-charts/victoria-metrics-stack
+
     helm:
       valueFiles:
         - values.yaml
       parameters:
         - name: "helm.dependency-update"
           value: "true"
+
   destination:
     server: https://kubernetes.default.svc
     namespace: my-app
@@ -27,3 +27,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+

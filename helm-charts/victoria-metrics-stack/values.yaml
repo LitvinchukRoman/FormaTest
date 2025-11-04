@@ -4,11 +4,22 @@ victoria-metrics:
     create: false
 
   vmagent:
-    serviceMonitorSelector:
-      matchLabels:
-        monitoring-component: "vm-stack-app"
+    additionalScrapeConfigs:
+      - job_name: 'my-app'
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [ __meta_kubernetes_service_name ]
+            regex: 'my-monitoring-stack-my-app'
+            action: keep
+          - source_labels: [ __meta_kubernetes_endpoint_port_name ]
+            regex: 'http-metrics'
+            action: keep
+          - target_label: 'endpoint'
+            replacement: 'http-metrics'
+          - target_label: 'metrics_path'
+            replacement: '/metrics'
   grafana:
-
     adminPassword: "neoadmin"
 
 my-app:
