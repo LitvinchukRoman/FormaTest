@@ -7,20 +7,19 @@ spec:
   project: default
   source:
     repoURL: https://github.com/LitvinchukRoman/FormaTest.git
-    targetRevision: HEAD
+    targetRevision: main
     path: helm-charts/victoria-metrics-stack
-
     helm:
       valueFiles:
         - values.yaml
       parameters:
+        - name: namespace
+          value: monitoring
         - name: "helm.dependency-update"
           value: "true"
-
   destination:
     server: https://kubernetes.default.svc
-    namespace: my-app
-
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true

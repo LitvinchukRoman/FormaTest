@@ -1,0 +1,16 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: {{ include "my-app.fullname" . }}-scrape
+  namespace: {{ .Release.Namespace }}
+  labels:
+    team: {{ .Values.team | default "default-team" }}
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+{{- include "my-app.labels" . | nindent 6 }}
+  endpoints:
+    - port: http-metrics
+      max_scrape_size: "33554432"

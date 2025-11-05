@@ -1,35 +1,21 @@
 victoria-metrics:
-
-  crd:
-    create: false
-
   vmagent:
-    additionalScrapeConfigs:
-      - job_name: 'my-app'
-        kubernetes_sd_configs:
-          - role: endpoints
-        relabel_configs:
-          - source_labels: [ __meta_kubernetes_service_name ]
-            regex: 'my-monitoring-stack-my-app'
-            action: keep
-          - source_labels: [ __meta_kubernetes_endpoint_port_name ]
-            regex: 'http-metrics'
-            action: keep
-          - target_label: 'endpoint'
-            replacement: 'http-metrics'
-          - target_label: 'metrics_path'
-            replacement: '/metrics'
+    spec:
+      port: "8429"
+      selectAllByDefault: true
+      scrapeInterval: 20s
+
   grafana:
     adminPassword: "neoadmin"
 
 my-app:
+  team: spam2000 # dependency to scrape our custom app
   service:
     targetPort: 3000
     port: 3000
-
-  serviceMonitor:
-    enabled: true
-    labels:
-      monitoring-component: "vm-stack-app"
+  replicaCount: 2
   dashboard:
     enabled: true
+  serviceAccount:
+    create: true
+    name: ""

@@ -9,44 +9,15 @@ metadata:
 data:
   my-app-dashboard.json: |
     {
-      "__inputs": [
-        {
-          "name": "DS_VICTORIAMETRICS",
-          "label": "VictoriaMetrics",
-          "description": "",
-          "type": "datasource",
-          "pluginId": "prometheus",
-          "pluginName": "Prometheus"
-        }
-      ],
-      "__elements": {},
-      "__requires": [
-        {
-          "type": "grafana",
-          "id": "grafana",
-          "name": "Grafana",
-          "version": "10.4.0"
-        },
-        {
-          "type": "datasource",
-          "id": "prometheus",
-          "name": "Prometheus",
-          "version": "1.0.0"
-        },
-        {
-          "type": "panel",
-          "id": "stat",
-          "name": "Stat",
-          "version": ""
-        }
-      ],
+      "__inputs": [],
+      "__requires": [],
       "annotations": {
         "list": [
           {
             "builtIn": 1,
             "datasource": {
-              "type": "prometheus",
-              "uid": "${DS_VICTORIAMETRICS}"
+              "type": "grafana",
+              "uid": "-- Grafana --"
             },
             "enable": true,
             "hide": true,
@@ -59,79 +30,56 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": null,
       "links": [],
-      "liveNow": false,
       "panels": [
         {
-          "id": 2,
-          "title": "Додаток UP",
-          "type": "stat",
+          "title": "Розподіл значень (Heatmap)",
+          "type": "heatmap",
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_VICTORIAMETRICS}"
+            "uid": "VictoriaMetrics"
           },
           "gridPos": {
-            "h": 8,
-            "w": 12,
+            "h": 10,
+            "w": 24,
             "x": 0,
             "y": 0
           },
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto",
-            "thresholds": [
-              {
-                "color": "red",
-                "value": 0
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ],
-            "mappings": [
-              {
-                "type": "value",
-                "options": {
-                  "0": {
-                    "text": "DOWN",
-                    "color": "red"
-                  },
-                  "1": {
-                    "text": "UP",
-                    "color": "green"
-                  }
-                }
-              }
-            ]
-          },
+          "id": 1,
           "targets": [
             {
+              "refId": "A",
+              "expr": "sum by (le) (\n  rate(ordered_histogram_bucket[5m])\n)",
+              "legendFormat": "{{`{{le}}`}}",
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_VICTORIAMETRICS}"
-              },
-              "refId": "A",
-              "expr": "up{job=\"{{ include "my-app.fullname" . }}\"}"
+                "uid": "VictoriaMetrics"
+              }
             }
-          ]
+          ],
+          "cards": {
+            "cardPadding": null,
+            "cardRound": null
+          },
+          "color": {
+            "mode": "palette-classic",
+            "palette": "interpolateOranges",
+            "scheme": "Oranges",
+            "exponent": 0.5,
+            "ska": 0,
+            "skr": 0
+          },
+          "dataFormat": "time_series_buckets"
         }
       ],
-      "refresh": "10s",
-      "schemaVersion": 39,
+      "refresh": "5s",
+      "schemaVersion": 36,
       "style": "dark",
-      "tags": [],
+      "tags": [
+        "prometheus",
+        "histogram",
+        "heatmap-only"
+      ],
       "templating": {
         "list": []
       },
@@ -141,9 +89,8 @@ data:
       },
       "timepicker": {},
       "timezone": "browser",
-      "title": "My App Status",
-      "uid": "my-app-dashboard",
-      "version": 1,
-      "weekStart": ""
+      "title": "Histogram Heatmap (ordered_histogram)",
+      "uid": "my-histogram-heatmap-12345",
+      "version": 2
     }
 {{- end }}

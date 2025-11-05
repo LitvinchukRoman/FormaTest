@@ -1,6 +1,6 @@
 apiVersion: v2
 name: my-monitoring-stack
-description: Повний стек моніторингу VictoriaMetrics та мого додатку
+description: VictoriaMetrics
 type: application
 version: 0.1.0
 

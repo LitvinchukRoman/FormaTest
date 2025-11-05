@@ -21,6 +21,7 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
+
 podSecurityContext: {}
 
 securityContext: {}
@@ -42,6 +43,8 @@ ingress:
   tls: []
 
 resources: {}
+
+team: spam2000
 
 autoscaling:
   enabled: false
