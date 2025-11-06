@@ -38,14 +38,6 @@ spec:
             - name: http-metrics
               containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: http-metrics
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http-metrics
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
