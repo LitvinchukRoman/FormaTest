@@ -23,10 +23,17 @@ To deploy infrastructure use command:
 ```angular2html
 bash setup.sh
 ```
+Wait till all resources deploy, run this commands to check if services are ready:
+```angular2html
+kubectl get applications -n argocd
+kubectl get deploy -n monitoring
+kubectl get pods -n monitoring
+kubectl get svc -n monitoring
+```
 
 When all charts deploy, you can access Grafana using this command:
 ```angular2html
-minikube service -n monitoring monitoring-grafana
+minikube service -n monitoring my-monitoring-stack-grafana
 ```
 Username: admin
 Password: neoadmin
