@@ -9,7 +9,6 @@ victoria-metrics:
     adminPassword: "neoadmin"
 
 my-app:
-  team: spam2000 # dependency to scrape our custom app
   service:
     targetPort: 3000
     port: 3000
